@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Colores de Pokemon -->
+    <color name="pokemon_yellow">#FFCB05</color>
+    <color name="pokemon_red">#EE1515</color>
+    <color name="pokemon_blue">#3B4CCA</color>
+    <color name="pokemon_green">#63B51B</color>
+    <color name="pokemon_purple">#A32BB8</color>
+    <color name="pokemon_gray">#6B6B6B</color>
+    <color name="pokemon_orange">#FF7533</color>
+    <color name="pokemon_pink">#F7ADEF</color>
+    <color name="pokemon_brown">#8B5A2B</color>
+</resources>

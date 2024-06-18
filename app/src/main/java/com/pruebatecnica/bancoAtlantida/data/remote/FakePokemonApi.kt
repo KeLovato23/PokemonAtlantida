@@ -1,4 +1,4 @@
-package com.pruebatecnica.bancoAtlantida.data
+package com.pruebatecnica.bancoAtlantida.data.remote
 
 import com.pruebatecnica.bancoAtlantida.data.model.Pokemon
 import com.pruebatecnica.bancoAtlantida.data.model.PokemonResponse

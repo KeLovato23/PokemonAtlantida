@@ -12,4 +12,6 @@ class PokemonViewModelFactory(private val pokemonRepository: PokemonRepository) 
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
+
+
 }

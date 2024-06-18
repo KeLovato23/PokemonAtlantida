@@ -1,12 +1,9 @@
 package com.pruebatecnica.bancoAtlantida.data.repository
 
-import android.util.Log
-import com.google.gson.Gson
-import com.pruebatecnica.bancoAtlantida.data.PokemonDao
-import com.pruebatecnica.bancoAtlantida.data.PokemonEntity
+import com.pruebatecnica.bancoAtlantida.data.local.PokemonDao
+import com.pruebatecnica.bancoAtlantida.data.model.PokemonEntity
 import com.pruebatecnica.bancoAtlantida.data.model.Pokemon
 import com.pruebatecnica.bancoAtlantida.data.model.PokemonDetailsResponse
-import com.pruebatecnica.bancoAtlantida.data.model.PokemonResponse
 import com.pruebatecnica.bancoAtlantida.data.remote.PokemonApi
 import com.pruebatecnica.bancoAtlantida.data.remote.PokemonDetailsApi
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +16,7 @@ class PokemonRepository(
 ) {
     suspend fun getPokemons(limit: Int, offset: Int): List<Pokemon> {
         return withContext(Dispatchers.IO) {
-            val cachedPokemons = pokemonDao.getAllPokemons()
+            val cachedPokemons = pokemonDao.getPokemons(offset, limit)
             if (cachedPokemons.isNotEmpty()) {
                 cachedPokemons.map { it.toPokemon() }
             } else {
@@ -34,7 +31,6 @@ class PokemonRepository(
             }
         }
     }
-
     suspend fun getPokemonDetails(pokemonId: Int): PokemonDetailsResponse {
         return pokemonDetailsApi.getPokemonDetails(pokemonId)
     }

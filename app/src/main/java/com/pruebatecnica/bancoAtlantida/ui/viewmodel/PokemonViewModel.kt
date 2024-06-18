@@ -15,8 +15,10 @@ class PokemonViewModel(private val pokemonRepository: PokemonRepository) : ViewM
 
     suspend fun getPokemons(limit: Int, offset: Int) {
         try {
-            val pokemonList = pokemonRepository.getPokemons(limit, offset)
-            _pokemons.value = pokemonList
+            val newPokemons = pokemonRepository.getPokemons(limit, offset)
+            val currentPokemons = _pokemons.value ?: emptyList()
+            val updatedPokemons = currentPokemons + newPokemons
+            _pokemons.value = updatedPokemons
         } catch (e: Exception) {
             // Manejar excepción
             Log.e("PokemonViewModel", "Error al obtener los Pokémon: ${e.message}")

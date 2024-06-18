@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.pruebatecnica.bancoAtlantida.data.FakePokemonApi
-import com.pruebatecnica.bancoAtlantida.data.FakePokemonDetailsApi
-import com.pruebatecnica.bancoAtlantida.data.PokemonDao
-import com.pruebatecnica.bancoAtlantida.data.PokemonDatabase
-import com.pruebatecnica.bancoAtlantida.data.PokemonEntity
+import com.pruebatecnica.bancoAtlantida.data.remote.FakePokemonApi
+import com.pruebatecnica.bancoAtlantida.data.remote.FakePokemonDetailsApi
+import com.pruebatecnica.bancoAtlantida.data.local.PokemonDao
+import com.pruebatecnica.bancoAtlantida.data.local.PokemonDatabase
+import com.pruebatecnica.bancoAtlantida.data.model.PokemonEntity
 
 import com.pruebatecnica.bancoAtlantida.data.repository.PokemonRepository
 import kotlinx.coroutines.runBlocking

@@ -1,4 +1,4 @@
-package com.pruebatecnica.bancoAtlantida.data
+package com.pruebatecnica.bancoAtlantida.data.remote
 
 import com.pruebatecnica.bancoAtlantida.data.model.Ability
 import com.pruebatecnica.bancoAtlantida.data.model.AbilityInfo

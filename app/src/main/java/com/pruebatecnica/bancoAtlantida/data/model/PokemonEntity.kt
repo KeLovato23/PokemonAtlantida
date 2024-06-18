@@ -1,4 +1,4 @@
-package com.pruebatecnica.bancoAtlantida.data
+package com.pruebatecnica.bancoAtlantida.data.model
 
 import androidx.room.Dao
 import androidx.room.Entity
@@ -10,5 +10,6 @@ import androidx.room.PrimaryKey
 data class PokemonEntity(
     @PrimaryKey val url: String,
     val name: String,
+
     val abilities: String // Nuevo campo para almacenar las habilidades
 )

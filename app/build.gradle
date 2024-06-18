@@ -51,9 +51,12 @@ dependencies {
     // RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
     // Glide (para cargar imágenes)
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation libs.androidx.junit.ktx
+    implementation libs.androidx.lifecycle.service
     kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
     def room_version = "2.5.1"

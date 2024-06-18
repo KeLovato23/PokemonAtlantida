@@ -4,24 +4,32 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.pruebatecnica.bancoAtlantida.data.model.Pokemon
 import com.pruebatecnica.bancoAtlantida.data.model.PokemonDetailsResponse
 import com.pruebatecnica.bancoAtlantida.data.repository.PokemonRepository
+import kotlinx.coroutines.launch
 
-// PokemonViewModel.kt
 class PokemonViewModel(private val pokemonRepository: PokemonRepository) : ViewModel() {
     private val _pokemons = MutableLiveData<List<Pokemon>>()
     val pokemons: LiveData<List<Pokemon>> = _pokemons
 
-    suspend fun getPokemons(limit: Int, offset: Int) {
-        try {
-            val newPokemons = pokemonRepository.getPokemons(limit, offset)
-            val currentPokemons = _pokemons.value ?: emptyList()
-            val updatedPokemons = currentPokemons + newPokemons
-            _pokemons.value = updatedPokemons
-        } catch (e: Exception) {
-            // Manejar excepción
-            Log.e("PokemonViewModel", "Error al obtener los Pokémon: ${e.message}")
+    private var offset = 0
+
+    fun getOffset(): Int {
+        return offset
+    }
+
+    fun getPokemons(limit: Int, offset: Int) {
+        viewModelScope.launch {
+            try {
+                val pokemonList = pokemonRepository.getPokemons(limit, offset)
+                _pokemons.value = pokemonList
+                this@PokemonViewModel.offset = offset + limit
+            } catch (e: Exception) {
+                // Manejar excepción
+                Log.e("PokemonViewModel", "Error al obtener los Pokémon: ${e.message}")
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-package com.pruebatecnica.bancoAtlantida
+package com.pruebatecnica.bancoAtlantida.data.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -6,11 +6,14 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.lifecycleScope
+import com.pruebatecnica.bancoAtlantida.MainActivity
+import com.pruebatecnica.bancoAtlantida.R
 import com.pruebatecnica.bancoAtlantida.data.local.PokemonDatabase
 import com.pruebatecnica.bancoAtlantida.data.remote.PokemonApi
 import com.pruebatecnica.bancoAtlantida.data.remote.PokemonDetailsApi
@@ -55,9 +58,14 @@ class PokemonUpdateService : LifecycleService() {
     private fun startBackgroundWork() {
         lifecycleScope.launch {
             while (true) {
-                pokemonViewModel.getPokemons(10, offset)
-                offset += 10
-                showNotification()
+                try {
+                    pokemonViewModel.getPokemons(10, offset)
+                    offset += 10
+                    Log.i("MOSTRARCONTADO", offset.toString())
+                    showNotification()
+                } catch (e: Exception) {
+                    Log.e("PokemonUpdateService", "Error al obtener los Pokémon: ${e.message}")
+                }
                 delay(30000)
             }
         }
@@ -88,7 +96,7 @@ class PokemonUpdateService : LifecycleService() {
 
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.imgdefault)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle("Actualización Pokémon")
             .setContentText("La lista de Pokémon ha sido actualizada.")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -123,16 +131,6 @@ class PokemonUpdateService : LifecycleService() {
 
         return retrofit.create(PokemonApi::class.java)
     }
-
-
-
-
-
-
-
-
-
-
 
     private fun createPokemonDetailsApi(): PokemonDetailsApi {
 

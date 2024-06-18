@@ -61,33 +61,20 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        // Crear una instancia de PokemonApi utilizando Retrofit
+
         val pokemonApi = createPokemonApi()
-
-        // Crear una instancia de PokemonDetailsApi utilizando Retrofit
         val pokemonDetailsApi = createPokemonDetailsApi()
-
-        // Obtener una instancia de la base de datos y el DAO
         val database = PokemonDatabase.getDatabase(this)
         val pokemonDao = database.pokemonDao()
-
-        // Crear una instancia de PokemonRepository
         val pokemonRepository = PokemonRepository(pokemonApi, pokemonDetailsApi, pokemonDao)
-
-        // Crear una instancia de PokemonViewModelFactory
         val pokemonViewModelFactory = PokemonViewModelFactory(pokemonRepository)
 
-        // Obtener una instancia de PokemonViewModel utilizando el PokemonViewModelFactory
         pokemonViewModel = ViewModelProvider(this, pokemonViewModelFactory).get(PokemonViewModel::class.java)
-
-        // Crear una instancia de PokemonAdapter y pasar el PokemonViewModel
         pokemonAdapter = PokemonAdapter(pokemonViewModel)
-
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
-        // recyclerView.layoutManager = GridLayoutManager(this, 2) // Dos columnas
         recyclerView.adapter = pokemonAdapter
 
-        // Obtener la lista de Pokémon
+
         CoroutineScope(Dispatchers.Main).launch {
             pokemonViewModel.getPokemons(15, 0)
         }
@@ -104,7 +91,6 @@ class MainActivity : AppCompatActivity() {
 
         val client = OkHttpClient.Builder().apply {
             this.addInterceptor(intercepter)
-                // time out setting
                 .connectTimeout(3, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
                 .writeTimeout(25, TimeUnit.SECONDS)
@@ -131,7 +117,7 @@ class MainActivity : AppCompatActivity() {
 
         val client = OkHttpClient.Builder().apply {
             this.addInterceptor(intercepter)
-                // time out setting
+
                 .connectTimeout(3, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
                 .writeTimeout(25, TimeUnit.SECONDS)
@@ -155,10 +141,9 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Los permisos han sido concedidos, iniciar el servicio en segundo plano
                 startPokemonUpdateService()
             } else {
-                // Los permisos han sido denegados, mostrar un mensaje al usuario
+
                 Toast.makeText(
                     this,
                     "Los permisos de notificación son necesarios para recibir actualizaciones de Pokémon.",

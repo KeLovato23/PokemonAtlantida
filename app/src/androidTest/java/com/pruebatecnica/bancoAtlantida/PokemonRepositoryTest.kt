@@ -27,16 +27,14 @@ class PokemonRepositoryTest {
 
     @Before
     fun setUp() {
-        // Configurar una instancia de la base de datos en memoria
+
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, PokemonDatabase::class.java).build()
         pokemonDao = db.pokemonDao()
 
-        // Crear instancias de PokemonApi y PokemonDetailsApi (usando implementaciones falsas)
+
         val pokemonApi = FakePokemonApi()
         val pokemonDetailsApi = FakePokemonDetailsApi()
-
-        // Crear una instancia de PokemonRepository con las dependencias
         pokemonRepository = PokemonRepository(pokemonApi, pokemonDetailsApi, pokemonDao)
     }
 
@@ -54,13 +52,9 @@ class PokemonRepositoryTest {
             PokemonEntity("https://example.com/pokemon/3", "Venusaur", "Overgrow, Chlorophyll")
         )
 
-        // Almacenar la lista de Pokémon en la base de datos
+
         pokemonDao.insertPokemons(pokemonList)
-
-        // Recuperar la lista de Pokémon desde la base de datos
-        val retrievedPokemonList = pokemonDao.getAllPokemons()
-
-        // Verificar que la lista almacenada y recuperada sean iguales
+        val retrievedPokemonList = pokemonDao.getPokemons(0, pokemonList.size)
         assertThat(retrievedPokemonList, equalTo(pokemonList))
     }
 }

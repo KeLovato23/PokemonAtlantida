@@ -11,5 +11,5 @@ data class PokemonEntity(
     @PrimaryKey val url: String,
     val name: String,
 
-    val abilities: String // Nuevo campo para almacenar las habilidades
+    val abilities: String
 )

@@ -38,10 +38,10 @@ class PokemonUpdateService : LifecycleService() {
         val pokemonDao = database.pokemonDao()
         pokemonRepository = PokemonRepository(pokemonApi, pokemonDetailsApi, pokemonDao)
 
-        // Obtener el ViewModelStore del servicio
+
         val viewModelStore = ViewModelStore()
 
-        // Inicializar el PokemonViewModel utilizando ViewModelProvider
+
         val pokemonViewModelFactory = PokemonViewModelFactory(pokemonRepository)
         pokemonViewModel = ViewModelProvider(viewModelStore, pokemonViewModelFactory).get(PokemonViewModel::class.java)
     }
@@ -53,13 +53,12 @@ class PokemonUpdateService : LifecycleService() {
     }
 
     private fun startBackgroundWork() {
-        // Realizar la actualización de la lista de Pokémon cada 30 segundos
         lifecycleScope.launch {
             while (true) {
                 pokemonViewModel.getPokemons(10, offset)
                 offset += 10
                 showNotification()
-                delay(30000) // Esperar 30 segundos antes de la próxima actualización
+                delay(30000)
             }
         }
     }
@@ -70,13 +69,13 @@ class PokemonUpdateService : LifecycleService() {
         val channelName = "Pokémon Update"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
 
-        // Crear el canal de notificación (para Android 8.0 y superiores)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(channelId, channelName, importance)
             notificationManager.createNotificationChannel(channel)
         }
 
-        // Crear el intent para abrir la MainActivity al hacer clic en la notificación
+
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
@@ -87,7 +86,7 @@ class PokemonUpdateService : LifecycleService() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // Construir la notificación
+
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.imgdefault)
             .setContentTitle("Actualización Pokémon")
@@ -96,7 +95,7 @@ class PokemonUpdateService : LifecycleService() {
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
-        // Mostrar la notificación
+
         notificationManager.notify(1, notificationBuilder.build())
     }
 
@@ -107,7 +106,6 @@ class PokemonUpdateService : LifecycleService() {
 
         val client = OkHttpClient.Builder().apply {
             this.addInterceptor(intercepter)
-                // time out setting
                 .connectTimeout(3,TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
                 .writeTimeout(25,TimeUnit.SECONDS)

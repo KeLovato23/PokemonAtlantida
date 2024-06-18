@@ -6,7 +6,6 @@ import com.pruebatecnica.bancoAtlantida.data.remote.PokemonApi
 
 class FakePokemonApi : PokemonApi {
     override suspend fun getPokemons(limit: Int, offset: Int): PokemonResponse {
-        // Retorna una respuesta de ejemplo
         return PokemonResponse(
             count = 3,
             next = null,

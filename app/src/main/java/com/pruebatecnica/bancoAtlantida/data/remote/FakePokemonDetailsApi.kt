@@ -9,7 +9,6 @@ import com.pruebatecnica.bancoAtlantida.data.remote.PokemonDetailsApi
 
 class FakePokemonDetailsApi : PokemonDetailsApi {
     override suspend fun getPokemonDetails(id: Int): PokemonDetailsResponse {
-        // Retorna una respuesta de ejemplo
         return PokemonDetailsResponse(
             id = id,
             name = "Bulbasaur",
